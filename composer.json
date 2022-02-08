@@ -1,0 +1,46 @@
+{
+    "name": "3x1io/filament-user",
+    "description": "User Manager Resource For Filament Admin",
+    "keywords": [
+        "laravel",
+        "user",
+        "cli",
+        "resource",
+        "ui",
+        "filament"
+    ],
+    "homepage": "https://3x1.io",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "io3x1\\FilamentUser\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "3x1",
+            "email": "info@3x1.io",
+            "role": "CEO"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^8.0",
+        "filament/filament": "^2.9",
+        "bezhansalleh/filament-shield": "^1.1",
+        "jeffgreco13/filament-breezy": "^1.0",
+        "3x1io/filament-excel": "^1.0",
+        "spatie/laravel-package-tools": "^1.10"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "io3x1\\FilamentUser\\FilamentUserProvider"
+            ]
+        }
+    },
+    "prefer-stable": true
+}
