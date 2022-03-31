@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace io3x1\FilamentUser\Resources;
 
 use Filament\Forms;
 use App\Models\User;
@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Builder;
-use App\Filament\Resources\UserResource\Pages;
+use io3x1\FilamentUser\Resources\UserResource\Pages;
 
 class UserResource extends Resource
 {
@@ -33,7 +33,7 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('password')
                     ->password()
                     ->maxLength(255)
-                    ->dehydrateStateUsing(fn ($state) => Hash::make($state)),
+                    ->dehydrateStateUsing(fn ($state) => !empty($state) ? Hash::make($state) : ""),
                 Forms\Components\BelongsToManyMultiSelect::make('roles')->relationship('roles', 'name'),
             ]);
     }

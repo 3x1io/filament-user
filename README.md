@@ -17,10 +17,6 @@ You can install the package via composer:
 composer require 3x1io/filament-user
 ```
 
-```bash
- php artisan vendor:publish --tag="filament-user"
-```
-
 and now clear cache
 
 ```bash

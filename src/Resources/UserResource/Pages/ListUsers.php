@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources\UserResource\Pages;
+namespace io3x1\FilamentUser\Resources\UserResource\Pages;
 
 use Maatwebsite\Excel\Facades\Excel;
-use App\Filament\Resources\UserResource;
+use io3x1\FilamentUser\Resources\UserResource;
 use Filament\Pages\Actions\ButtonAction;
 use Filament\Resources\Pages\ListRecords;
 use io3x1\FilamentUser\Export\UsersExport;
