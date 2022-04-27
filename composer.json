@@ -28,7 +28,6 @@
         "php": "^8.0",
         "filament/filament": "^2.9",
         "bezhansalleh/filament-shield": "^1.1",
-        "3x1io/filament-excel": "^1.0",
         "spatie/laravel-package-tools": "^1.10"
     },
     "config": {

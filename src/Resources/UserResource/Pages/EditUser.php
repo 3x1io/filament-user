@@ -20,4 +20,9 @@ class EditUser extends EditRecord
         }
         return $data;
     }
+
+    protected function getTitle(): string
+    {
+        return trans('filament-user::user.resource.title.edit');
+    }
 }

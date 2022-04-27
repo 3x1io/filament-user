@@ -19,4 +19,19 @@ class FilamentUserProvider extends PluginServiceProvider
     {
         $package->name('filament-user');
     }
+
+    public function boot(): void
+    {
+        parent::boot();
+
+        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'filament-user');
+
+        $this->publishes([
+            __DIR__ . '/../config' => config_path(),
+        ], 'filament-user-config');
+
+        $this->publishes([
+            __DIR__ . '/../resources/lang' => resource_path('lang/vendor/filament-user'),
+        ], 'filament-user-translations');
+    }
 }
