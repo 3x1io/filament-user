@@ -7,14 +7,18 @@ User Resource For Filament Admin
 Before install looking for this packages and install it
 
 - [filament-shield](https://github.com/bezhansalleh/filament-shield)
-- [filament-breezy](https://github.com/jeffgreco13/filament-breezy)
-- [filament-excel](https://github.com/3x1io/filament-excel)
-
 
 You can install the package via composer:
 
 ```bash
 composer require 3x1io/filament-user
+```
+
+Publish Translation and config
+
+```bash
+php artisan vendor:publish --tag="filament-user-config"
+php artisan vendor:publish --tag="filament-user-translations"
 ```
 
 and now clear cache
