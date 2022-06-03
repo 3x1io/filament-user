@@ -14,6 +14,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\BooleanColumn;
 use Illuminate\Database\Eloquent\Builder;
 use io3x1\FilamentUser\Resources\UserResource\Pages;
+use STS\FilamentImpersonate\Impersonate;
 
 class UserResource extends Resource
 {
@@ -75,6 +76,9 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('updated_at')->label(trans('filament-user::user.resource.updated_at'))
                     ->dateTime('M j, Y')->sortable(),
 
+            ])
+            ->prependActions([
+                Impersonate::make('impersonate'),
             ])
             ->filters([
                 Tables\Filters\Filter::make('verified')
