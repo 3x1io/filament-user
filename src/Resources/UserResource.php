@@ -59,7 +59,7 @@ class UserResource extends Resource
                     ->password()
                     ->maxLength(255)
                     ->dehydrateStateUsing(fn ($state) => !empty($state) ? Hash::make($state) : ""),
-                Forms\Components\BelongsToManyMultiSelect::make('roles')->relationship('roles', 'name')->label(trans('filament-user::user.resource.roles')),
+                Forms\Components\MultiSelect::make('roles')->relationship('roles', 'name')->label(trans('filament-user::user.resource.roles')),
             ]);
     }
 
