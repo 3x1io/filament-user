@@ -1,3 +1,5 @@
+![Screenshot of Login](./art/screenshot.png)
+
 # Filament User Resource
 
 User Resource For Filament Admin
@@ -27,14 +29,13 @@ and now clear cache
 php artisan optimize:clear
 ```
 
-
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 
 ## Credits
 
-- [3x1](https://github.com/3x1io)
+- [Fady Mondy](https://github.com/3x1io)
 
 ## License
 
