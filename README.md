@@ -29,6 +29,19 @@ and now clear cache
 php artisan optimize:clear
 ```
 
+## Publish Resource
+
+you can publish the resource to your project
+
+```bash
+php artisan filament-user:publish
+```
+
+it will publish the resource to your project
+
+than go to `filament-user.php` config file and change the `publish_resource` to `true`
+
+
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
