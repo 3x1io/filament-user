@@ -57,7 +57,11 @@ class UserResource extends Resource
             Forms\Components\TextInput::make('password')->label(trans('filament-user::user.resource.password'))
                 ->password()
                 ->maxLength(255)
-                ->dehydrateStateUsing(fn ($state) => !empty($state) ? Hash::make($state) : ""),
+                ->dehydrateStateUsing(static function ($state){
+                    if(!empty($state)){
+                        return Hash::make($state);
+                    }
+            }),
         ];
 
         if(config('filament-user.shield')){
