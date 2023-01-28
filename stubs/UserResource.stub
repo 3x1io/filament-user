@@ -1,6 +1,6 @@
 <?php
 
-namespace io3x1\FilamentUser\Resources;
+namespace App\Filament\Resources;
 
 use Filament\Forms;
 use App\Models\User;
@@ -13,7 +13,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Columns\BooleanColumn;
 use Illuminate\Database\Eloquent\Builder;
-use io3x1\FilamentUser\Resources\UserResource\Pages;
+use App\Filament\Resources\UserResource\Pages;
 use STS\FilamentImpersonate\Impersonate;
 
 class UserResource extends Resource

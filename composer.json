@@ -29,7 +29,8 @@
         "bezhansalleh/filament-shield": "^2.3",
         "filament/filament": "^2.16",
         "spatie/laravel-package-tools": "^1.14",
-        "stechstudio/filament-impersonate": "^2.11"
+        "stechstudio/filament-impersonate": "^2.11",
+        "queents/console-helpers": "^1.0"
     },
     "config": {
         "sort-packages": true
