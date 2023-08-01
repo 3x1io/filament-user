@@ -2,18 +2,18 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms;
-use App\Models\User;
-use Filament\Tables;
-use Filament\Resources\Form;
-use Filament\Resources\Table;
-use Filament\Resources\Resource;
-use Illuminate\Support\Facades\Hash;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Forms\Components\TextInput;
-use Filament\Tables\Columns\BooleanColumn;
-use Illuminate\Database\Eloquent\Builder;
 use App\Filament\Resources\UserResource\Pages;
+use App\Models\User;
+use Filament\Forms;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Columns\BooleanColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Hash;
 use STS\FilamentImpersonate\Impersonate;
 
 class UserResource extends Resource
@@ -24,7 +24,7 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-lock-closed';
 
-    protected static function getNavigationLabel(): string
+    public static function getNavigationLabel(): string
     {
         return trans('filament-user::user.resource.label');
     }
@@ -39,12 +39,12 @@ class UserResource extends Resource
         return trans('filament-user::user.resource.single');
     }
 
-    protected static function getNavigationGroup(): ?string
+    public static function getNavigationGroup(): ?string
     {
         return config('filament-user.group');
     }
 
-    protected function getTitle(): string
+    public function getTitle(): string
     {
         return trans('filament-user::user.resource.title.resource');
     }
@@ -52,25 +52,33 @@ class UserResource extends Resource
     public static function form(Form $form): Form
     {
         $rows = [
-            TextInput::make('name')->required()->label(trans('filament-user::user.resource.name')),
-            TextInput::make('email')->email()->required()->label(trans('filament-user::user.resource.email')),
-            Forms\Components\TextInput::make('password')->label(trans('filament-user::user.resource.password'))
+            TextInput::make('name')
+                ->required()
+                ->label(trans('filament-user::user.resource.name')),
+            TextInput::make('email')
+                ->email()
+                ->required()
+                ->label(trans('filament-user::user.resource.email')),
+            TextInput::make('password')
+                ->label(trans('filament-user::user.resource.password'))
                 ->password()
                 ->maxLength(255)
-                ->dehydrateStateUsing(static function ($state) use ($form){
-                    if(!empty($state)){
+                ->dehydrateStateUsing(static function ($state) use ($form) {
+                    if (! empty($state)) {
                         return Hash::make($state);
                     }
 
                     $user = User::find($form->getColumns());
-                    if($user){
+                    if ($user) {
                         return $user->password;
                     }
-            }),
+                }),
         ];
 
-        if(config('filament-user.shield')){
-            $rows[] = Forms\Components\MultiSelect::make('roles')->relationship('roles', 'name')->label(trans('filament-user::user.resource.roles'));
+        if (config('filament-user.shield')) {
+            $rows[] = Forms\Components\MultiSelect::make('roles')
+                ->relationship('roles', 'name')
+                ->label(trans('filament-user::user.resource.roles'));
         }
 
         $form->schema($rows);
@@ -82,13 +90,26 @@ class UserResource extends Resource
     {
         $table
             ->columns([
-                TextColumn::make('id')->sortable()->label(trans('filament-user::user.resource.id')),
-                TextColumn::make('name')->sortable()->searchable()->label(trans('filament-user::user.resource.name')),
-                TextColumn::make('email')->sortable()->searchable()->label(trans('filament-user::user.resource.email')),
-                BooleanColumn::make('email_verified_at')->sortable()->searchable()->label(trans('filament-user::user.resource.email_verified_at')),
-                Tables\Columns\TextColumn::make('created_at')->label(trans('filament-user::user.resource.created_at'))
+                TextColumn::make('id')
+                    ->sortable()
+                    ->label(trans('filament-user::user.resource.id')),
+                TextColumn::make('name')
+                    ->sortable()
+                    ->searchable()
+                    ->label(trans('filament-user::user.resource.name')),
+                TextColumn::make('email')
+                    ->sortable()
+                    ->searchable()
+                    ->label(trans('filament-user::user.resource.email')),
+                BooleanColumn::make('email_verified_at')
+                    ->sortable()
+                    ->searchable()
+                    ->label(trans('filament-user::user.resource.email_verified_at')),
+                TextColumn::make('created_at')
+                    ->label(trans('filament-user::user.resource.created_at'))
                     ->dateTime('M j, Y')->sortable(),
-                Tables\Columns\TextColumn::make('updated_at')->label(trans('filament-user::user.resource.updated_at'))
+                TextColumn::make('updated_at')
+                    ->label(trans('filament-user::user.resource.updated_at'))
                     ->dateTime('M j, Y')->sortable(),
 
             ])
@@ -101,11 +122,11 @@ class UserResource extends Resource
                     ->query(fn (Builder $query): Builder => $query->whereNull('email_verified_at')),
             ]);
 
-        if(config('filament-user.impersonate')){
-            $table->prependActions([
-                Impersonate::make('impersonate'),
-            ]);
-        }
+        // if(config('filament-user.impersonate')){
+        //     $table->prependActions([
+        //         Impersonate::make('impersonate'),
+        //     ]);
+        // }
 
         return $table;
     }
