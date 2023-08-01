@@ -2,19 +2,23 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\UserResource\Pages;
-use App\Models\User;
 use Filament\Forms;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
+use App\Models\User;
 use Filament\Tables;
-use Filament\Tables\Columns\BooleanColumn;
-use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
+use Filament\Resources\Resource;
 use Illuminate\Support\Facades\Hash;
-use STS\FilamentImpersonate\Impersonate;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\TextInput;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\DeleteAction;
+use Illuminate\Database\Eloquent\Builder;
+use App\Filament\Resources\UserResource\Pages;
+use STS\FilamentImpersonate\Tables\Actions\Impersonate;
 
 class UserResource extends Resource
 {
@@ -64,19 +68,16 @@ class UserResource extends Resource
                 ->password()
                 ->maxLength(255)
                 ->dehydrateStateUsing(static function ($state) use ($form) {
-                    if (! empty($state)) {
-                        return Hash::make($state);
-                    }
+                    return !empty($state) ? Hash::make($state) : null;
 
                     $user = User::find($form->getColumns());
-                    if ($user) {
-                        return $user->password;
-                    }
+                    return $user ? $user->password : null;
                 }),
         ];
 
         if (config('filament-user.shield')) {
-            $rows[] = Forms\Components\MultiSelect::make('roles')
+            $rows[] = Forms\Components\Select::make('roles')
+                ->multiple()
                 ->relationship('roles', 'name')
                 ->label(trans('filament-user::user.resource.roles'));
         }
@@ -101,32 +102,41 @@ class UserResource extends Resource
                     ->sortable()
                     ->searchable()
                     ->label(trans('filament-user::user.resource.email')),
-                BooleanColumn::make('email_verified_at')
+                IconColumn::make('email_verified_at')
+                    ->boolean()
                     ->sortable()
                     ->searchable()
                     ->label(trans('filament-user::user.resource.email_verified_at')),
                 TextColumn::make('created_at')
                     ->label(trans('filament-user::user.resource.created_at'))
-                    ->dateTime('M j, Y')->sortable(),
+                    ->dateTime('M j, Y')
+                    ->sortable(),
                 TextColumn::make('updated_at')
                     ->label(trans('filament-user::user.resource.updated_at'))
-                    ->dateTime('M j, Y')->sortable(),
-
+                    ->dateTime('M j, Y')
+                    ->sortable(),
             ])
             ->filters([
                 Tables\Filters\Filter::make('verified')
                     ->label(trans('filament-user::user.resource.verified'))
-                    ->query(fn (Builder $query): Builder => $query->whereNotNull('email_verified_at')),
+                    ->query(fn(Builder $query): Builder => $query->whereNotNull('email_verified_at')),
                 Tables\Filters\Filter::make('unverified')
                     ->label(trans('filament-user::user.resource.unverified'))
-                    ->query(fn (Builder $query): Builder => $query->whereNull('email_verified_at')),
+                    ->query(fn(Builder $query): Builder => $query->whereNull('email_verified_at')),
+            ])
+            ->actions([
+                ActionGroup::make([
+                    ViewAction::make(),
+                    EditAction::make(),
+                    DeleteAction::make()
+                ]),
             ]);
 
-        // if(config('filament-user.impersonate')){
-        //     $table->prependActions([
-        //         Impersonate::make('impersonate'),
-        //     ]);
-        // }
+        if(config('filament-user.impersonate')){
+            $table->prependActions([
+                Impersonate::make('impersonate'),
+            ]);
+        }
 
         return $table;
     }

@@ -29,7 +29,7 @@
         "bezhansalleh/filament-shield": "^3.0@beta",
         "filament/filament": "^3.0.0",
         "spatie/laravel-package-tools": "^1.14",
-        "stechstudio/filament-impersonate": "^3.1",
+        "stechstudio/filament-impersonate": "^3.2",
         "queents/console-helpers": "^1.0"
     },
     "config": {
