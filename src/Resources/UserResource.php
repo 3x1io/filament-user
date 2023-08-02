@@ -78,6 +78,7 @@ class UserResource extends Resource
         if (config('filament-user.shield')) {
             $rows[] = Forms\Components\Select::make('roles')
                 ->multiple()
+                ->preload()
                 ->relationship('roles', 'name')
                 ->label(trans('filament-user::user.resource.roles'));
         }
@@ -89,7 +90,7 @@ class UserResource extends Resource
 
     public static function table(Table $table): Table
     {
-        $table
+        return $table
             ->columns([
                 TextColumn::make('id')
                     ->sortable()
@@ -125,20 +126,13 @@ class UserResource extends Resource
                     ->query(fn(Builder $query): Builder => $query->whereNull('email_verified_at')),
             ])
             ->actions([
+                Impersonate::make('impersonate'),
                 ActionGroup::make([
                     ViewAction::make(),
                     EditAction::make(),
                     DeleteAction::make()
                 ]),
             ]);
-
-        if(config('filament-user.impersonate')){
-            $table->prependActions([
-                Impersonate::make('impersonate'),
-            ]);
-        }
-
-        return $table;
     }
 
     public static function getPages(): array
