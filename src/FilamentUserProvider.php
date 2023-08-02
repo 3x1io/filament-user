@@ -2,13 +2,13 @@
 
 namespace io3x1\FilamentUser;
 
-use Filament\PluginServiceProvider;
-use io3x1\FilamentUser\Console\PublishUserResourceCommand;
-use io3x1\FilamentUser\Resources\UserResource;
 use Spatie\LaravelPackageTools\Package;
+use io3x1\FilamentUser\Resources\UserResource;
+use Spatie\LaravelPackageTools\PackageServiceProvider;
+use io3x1\FilamentUser\Console\PublishUserResourceCommand;
 
 
-class FilamentUserProvider extends PluginServiceProvider
+class FilamentUserProvider extends PackageServiceProvider
 {
     /**
      * @var string

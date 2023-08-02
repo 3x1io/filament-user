@@ -9,7 +9,7 @@ class CreateUser extends CreateRecord
 {
     protected static string $resource = UserResource::class;
 
-    protected function getTitle(): string
+    public function getTitle(): string
     {
         return trans('filament-user::user.resource.title.create');
     }

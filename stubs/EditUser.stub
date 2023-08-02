@@ -10,7 +10,7 @@ class EditUser extends EditRecord
 {
     protected static string $resource = UserResource::class;
 
-    protected function mutateFormDataBeforeSave(array $data): array
+    public function mutateFormDataBeforeSave(array $data): array
     {
         $getUser = User::where('email', $data['email'])->first();
         if ($getUser) {
@@ -21,7 +21,7 @@ class EditUser extends EditRecord
         return $data;
     }
 
-    protected function getTitle(): string
+    public function getTitle(): string
     {
         return trans('filament-user::user.resource.title.edit');
     }
