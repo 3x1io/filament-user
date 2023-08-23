@@ -5,6 +5,8 @@ namespace io3x1\FilamentUser\Resources\UserResource\Pages;
 use App\Models\User;
 use io3x1\FilamentUser\Resources\UserResource;
 use Filament\Resources\Pages\EditRecord;
+use Filament\Actions\DeleteAction;
+use STS\FilamentImpersonate\Pages\Actions\Impersonate;
 
 class EditUser extends EditRecord
 {
@@ -24,5 +26,13 @@ class EditUser extends EditRecord
     public function getTitle(): string
     {
         return trans('filament-user::user.resource.title.edit');
+    }
+
+    protected function getActions(): array
+    {
+        !config('filament-user.impersonate') ?: $ret[] = Impersonate::make()->record($this->getRecord());
+        $ret[] = DeleteAction::make();
+
+        return $ret;
     }
 }
