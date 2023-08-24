@@ -89,7 +89,8 @@ class UserResource extends Resource
 
     public static function table(Table $table): Table
     {
-        return $table
+        !config('filament-user.impersonate') ?: $table->actions([Impersonate::make('impersonate')]);
+        $table
             ->columns([
                 TextColumn::make('id')
                     ->sortable()
@@ -125,13 +126,13 @@ class UserResource extends Resource
                     ->query(fn(Builder $query): Builder => $query->whereNull('email_verified_at')),
             ])
             ->actions([
-                Impersonate::make('impersonate'),
                 ActionGroup::make([
                     ViewAction::make(),
                     EditAction::make(),
                     DeleteAction::make()
                 ]),
             ]);
+        return $table;
     }
 
     public static function getPages(): array
